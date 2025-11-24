@@ -1,8 +1,9 @@
 package com.example.projeto_avalia.dto;
 
+import com.example.projeto_avalia.model.UserRole;
+
 public record RegisterDTO(
-        String name,
         String email,
         String password,
-        String phone
+        UserRole role
 ) {}
