@@ -4,7 +4,6 @@ import com.example.projeto_avalia.dto.AuthResponseDTO;
 import com.example.projeto_avalia.dto.LoginDTO;
 import com.example.projeto_avalia.dto.RegisterDTO;
 import com.example.projeto_avalia.model.User;
-import com.example.projeto_avalia.model.UserRole;
 import com.example.projeto_avalia.repository.UserRepository;
 import com.example.projeto_avalia.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -24,11 +23,9 @@ public class AuthService {
 
     public AuthResponseDTO register(RegisterDTO dto) {
         User user = User.builder()
-                .name(dto.name())
                 .email(dto.email())
                 .password(passwordEncoder.encode(dto.password()))
-                .phone(dto.phone())
-                .role(UserRole.COORDENADOR)
+                .role(dto.role())
                 .build();
 
         userRepository.save(user);
