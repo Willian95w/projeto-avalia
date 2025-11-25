@@ -48,4 +48,9 @@ public class DisciplinaService {
         return disciplinaRepository.findByNameContainingIgnoreCaseOrderByNameAsc(name);
     }
 
+    public Disciplina buscarPorId(Long id) {
+        return disciplinaRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Disciplina não encontrada"));
+    }
+
 }
