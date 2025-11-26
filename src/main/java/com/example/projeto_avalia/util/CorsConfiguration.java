@@ -14,7 +14,8 @@ public class CorsConfiguration implements WebMvcConfigurer {
                         "https://projeto-avalia-coordenador.vercel.app",
                         "https://projeto-avalia-professor.vercel.app"
                 )
-                .allowedMethods("GET", "POST", "PUT", "DELETE")
-                .allowedHeaders("*");
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("Content-Type", "Authorization", "X-Requested-With", "Accept")
+                .allowCredentials(true);
     }
 }
