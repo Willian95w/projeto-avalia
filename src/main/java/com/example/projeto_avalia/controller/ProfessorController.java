@@ -1,10 +1,11 @@
 package com.example.projeto_avalia.controller;
 
+import com.example.projeto_avalia.dto.AlterarSenhaDTO;
 import com.example.projeto_avalia.dto.ProfessorRegisterDTO;
 import com.example.projeto_avalia.dto.ProfessorUpdateDTO;
 import com.example.projeto_avalia.model.Professor;
-import com.example.projeto_avalia.service.ProfessorService;
 import com.example.projeto_avalia.service.DisciplinaService;
+import com.example.projeto_avalia.service.ProfessorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -56,4 +57,13 @@ public class ProfessorController {
         List<Professor> professores = professorService.buscarPorNome(name);
         return ResponseEntity.ok(professores);
     }
+
+    @PutMapping("/{id}/senha")
+    public ResponseEntity<Professor> alterarSenha(
+            @PathVariable Long id,
+            @RequestBody AlterarSenhaDTO dto
+    ) {
+        return ResponseEntity.ok(professorService.alterarSenha(id, dto.novaSenha(), dto.confirmSenha()));
+    }
+
 }
