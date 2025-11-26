@@ -20,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
+import java.net.URL;
 import java.util.List;
 
 @Service
@@ -88,7 +89,7 @@ public class ProvaService {
 
             Image logo = null;
             try {
-                logo = Image.getInstance("src/main/resources/fatec_logo.jpg");
+                logo = Image.getInstance(new URL("https://bkpsitecpsnew.blob.core.windows.net/uploadsitecps/sites/1/2012/05/Logo-Fatec-1200x800-1.jpg"));
                 logo.scaleToFit(80, 80);
             } catch (Exception e) {
             }
