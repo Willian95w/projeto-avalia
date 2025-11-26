@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +35,8 @@ public class ProfessorService {
         if (!dto.password().equals(dto.confirmPassword())) {
             throw new BadRequestException("As senhas não conferem.");
         }
+
+        validarSenha(dto.password());
 
         User user = User.builder()
                 .email(dto.email())
@@ -88,5 +91,39 @@ public class ProfessorService {
 
     public List<Professor> buscarPorNome(String name) {
         return professorRepository.findByNameContainingIgnoreCaseOrderByNameAsc(name);
+    }
+
+    public Professor alterarSenha(Long professorId, String novaSenha, String confirmSenha) {
+        if (!novaSenha.equals(confirmSenha)) {
+            throw new BadRequestException("As senhas não conferem.");
+        }
+
+        validarSenha(novaSenha);
+
+        Professor professor = professorRepository.findById(professorId)
+                .orElseThrow(() -> new ResourceNotFoundException("Professor não encontrado"));
+
+        professor.getUser().setPassword(passwordEncoder.encode(novaSenha));
+
+        return professorRepository.save(professor);
+    }
+
+    public Professor buscarPorUsuarioId(Long userId) {
+        return professorRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Professor não encontrado para este usuário."));
+    }
+
+    private void validarSenha(String senha) {
+        if (senha == null || senha.length() < 6) {
+            throw new BadRequestException("A senha deve ter no mínimo 6 caracteres.");
+        }
+
+        if (!Pattern.compile(".*[a-zA-Z].*").matcher(senha).matches()) {
+            throw new BadRequestException("A senha deve conter pelo menos 1 letra.");
+        }
+
+        if (!Pattern.compile(".*[0-9].*").matcher(senha).matches()) {
+            throw new BadRequestException("A senha deve conter pelo menos 1 número.");
+        }
     }
 }
