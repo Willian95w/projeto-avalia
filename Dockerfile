@@ -1,20 +1,22 @@
-# Base image com JDK 21
-FROM openjdk:21-jdk-slim
-
-# Instala Maven
-RUN apt-get update && apt-get install -y maven git && rm -rf /var/lib/apt/lists/*
-
-# Define diretório do app
+# ============================
+# 1) Build da aplicação
+# ============================
+FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app
 
-# Copia todos os arquivos do projeto
-COPY . .
+COPY pom.xml .
+COPY src ./src
 
-# Build do projeto
 RUN mvn clean package -DskipTests
 
-# Porta que o Spring Boot vai usar
+# ============================
+# 2) Execução da aplicação
+# ============================
+FROM eclipse-temurin:21-jdk
+WORKDIR /app
+
+COPY --from=build /app/target/*.jar app.jar
+
 EXPOSE 8080
 
-# Comando para rodar a aplicação
-CMD ["java", "-jar", "target/loja-brinquedos-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
