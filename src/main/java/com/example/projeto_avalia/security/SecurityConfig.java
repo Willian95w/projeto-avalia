@@ -27,6 +27,8 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable());
 
         http.authorizeHttpRequests(auth -> auth
+                .requestMatchers("/disciplinas/**").hasRole("COORDENADOR")
+                .requestMatchers("/professores/**").hasRole("COORDENADOR")
                 .requestMatchers("/auth/**").permitAll()
                 .anyRequest().authenticated()
         );
