@@ -6,7 +6,6 @@ import java.util.List;
 public record ProvaRegisterDTO(
         String titulo,
         List<Long> idsQuestoes,
-        Long disciplinaId,
         LocalDateTime dataProva,
         Long professorResponsavelId,
         String tipoAvaliacao,
