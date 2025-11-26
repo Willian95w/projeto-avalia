@@ -45,7 +45,7 @@ public class QuestaoController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/questoes")
+    @GetMapping("/buscar")
     public ResponseEntity<List<Questao>> buscarComFiltros(
             @RequestParam(required = false) String title,
             @RequestParam(required = false) List<Long> disciplinaIds,
