@@ -15,9 +15,9 @@ public interface QuestaoRepository extends JpaRepository<Questao, Long> {
 
     @Query("""
         SELECT q FROM Questao q
-        WHERE (:title IS NULL OR LOWER(q.title) LIKE LOWER(CONCAT('%', :title, '%')))
-        AND (:disciplinas IS NULL OR q.subject.id IN :disciplinas)
-        AND (:professores IS NULL OR q.createdBy.id IN :professores)
+        WHERE (:title IS NULL OR :title = '' OR LOWER(q.title) LIKE LOWER(CONCAT('%', :title, '%')))
+        AND (:disciplinas IS NULL OR :disciplinas IS EMPTY OR q.subject.id IN :disciplinas)
+        AND (:professores IS NULL OR :professores IS EMPTY OR q.createdBy.id IN :professores)
         ORDER BY q.id DESC
     """)
     List<Questao> buscarComFiltros(
