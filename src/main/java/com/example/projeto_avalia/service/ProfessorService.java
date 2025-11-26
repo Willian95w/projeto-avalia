@@ -63,8 +63,8 @@ public class ProfessorService {
         if (dto.name() != null) professor.setName(dto.name());
         if (dto.phone() != null) professor.setPhone(dto.phone());
 
-        if (dto.disciplinaIds() != null) {
-            List<Disciplina> novasDisciplinas = dto.disciplinaIds().stream()
+        if (dto.subjectIds() != null) {
+            List<Disciplina> novasDisciplinas = dto.subjectIds().stream()
                     .map(disciplinaService::buscarPorId)
                     .toList();
 

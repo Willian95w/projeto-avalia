@@ -6,5 +6,5 @@ public record ProfessorUpdateDTO(
         String name,
         String phone,
         String email,
-        List<Long> disciplinaIds
+        List<Long> subjectIds
 ) {}

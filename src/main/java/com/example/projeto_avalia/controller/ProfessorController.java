@@ -22,7 +22,7 @@ public class ProfessorController {
     // Criar professor
     @PostMapping
     public ResponseEntity<Professor> criarProfessor(@RequestBody ProfessorRegisterDTO dto) {
-        List subjects = dto.disciplinaIds().stream()
+        List subjects = dto.subjectIds().stream()
                 .map(disciplinaService::buscarPorId)
                 .toList();
 

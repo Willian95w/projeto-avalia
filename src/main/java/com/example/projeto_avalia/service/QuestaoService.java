@@ -131,7 +131,7 @@ public class QuestaoService {
         User usuario = getUsuarioAutenticado();
 
         if (usuario.getRole() != UserRole.COORDENADOR) {
-            professorId = usuario.getId(); // professor só pode ver dele
+            professorId = usuario.getId();
         }
 
         if (disciplinaId != null && professorId != null) {
