@@ -117,6 +117,10 @@ public class QuestaoService {
     public List<Questao> buscarComFiltros(String title, List<Long> disciplinaIds, List<Long> professorIds) {
         User usuario = getUsuarioAutenticado();
 
+        if (disciplinaIds != null && disciplinaIds.isEmpty()) {
+            disciplinaIds = null;
+        }
+
         if (usuario.getRole() != UserRole.COORDENADOR) {
             professorIds = List.of(usuario.getId());
         }
