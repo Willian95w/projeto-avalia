@@ -4,10 +4,7 @@ import com.example.projeto_avalia.dto.QuestaoRegisterDTO;
 import com.example.projeto_avalia.dto.QuestaoUpdateDTO;
 import com.example.projeto_avalia.exceptions.BadRequestException;
 import com.example.projeto_avalia.exceptions.ResourceNotFoundException;
-import com.example.projeto_avalia.model.Disciplina;
-import com.example.projeto_avalia.model.Questao;
-import com.example.projeto_avalia.model.User;
-import com.example.projeto_avalia.model.UserRole;
+import com.example.projeto_avalia.model.*;
 import com.example.projeto_avalia.repository.QuestaoRepository;
 import com.example.projeto_avalia.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +20,7 @@ public class QuestaoService {
     private final QuestaoRepository questaoRepository;
     private final DisciplinaService disciplinaService;
     private final UserRepository userRepository;
+    private final ProfessorService professorService;
 
     private User getUsuarioAutenticado() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -34,6 +32,13 @@ public class QuestaoService {
 
         User criador = getUsuarioAutenticado();
         Disciplina disciplina = disciplinaService.buscarPorId(dto.subjectId());
+
+        if (criador.getRole() != UserRole.COORDENADOR) {
+            Professor professor = professorService.buscarPorUsuarioId(criador.getId());
+            if (professor.getSubjects().stream().noneMatch(d -> d.getId().equals(dto.subjectId()))) {
+                throw new BadRequestException("Você não pode criar questões em disciplinas que não são suas.");
+            }
+        }
 
         if (!List.of("A","B","C","D","E").contains(dto.correctAnswer().toUpperCase())) {
             throw new BadRequestException("A resposta correta deve ser A, B, C, D ou E.");
