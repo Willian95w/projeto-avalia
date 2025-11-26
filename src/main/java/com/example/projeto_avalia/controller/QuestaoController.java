@@ -45,16 +45,12 @@ public class QuestaoController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/buscar")
-    public ResponseEntity<List<Questao>> buscarPorTitulo(@RequestParam String title) {
-        return ResponseEntity.ok(questaoService.buscarPorTitulo(title));
-    }
-
-    @GetMapping("/filtro")
-    public List<Questao> filtroGeral(
-            @RequestParam(required = false) Long disciplinaId,
-            @RequestParam(required = false) Long professorId
+    @GetMapping("/questoes")
+    public ResponseEntity<List<Questao>> buscarComFiltros(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) List<Long> disciplinaIds,
+            @RequestParam(required = false) List<Long> professorIds
     ) {
-        return questaoService.filtrar(disciplinaId, professorId);
+        return ResponseEntity.ok(questaoService.buscarComFiltros(title, disciplinaIds, professorIds));
     }
 }

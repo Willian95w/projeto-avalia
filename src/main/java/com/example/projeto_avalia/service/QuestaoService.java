@@ -114,34 +114,13 @@ public class QuestaoService {
         questaoRepository.delete(questao);
     }
 
-    public List<Questao> buscarPorTitulo(String title) {
-        User usuario = getUsuarioAutenticado();
-
-        List<Questao> resultados = questaoRepository
-                .findByTitleContainingIgnoreCaseOrderByTitleAsc(title);
-
-        if (usuario.getRole() == UserRole.COORDENADOR) return resultados;
-
-        return resultados.stream()
-                .filter(q -> q.getCreatedBy().getId().equals(usuario.getId()))
-                .toList();
-    }
-
-    public List<Questao> filtrar(Long disciplinaId, Long professorId) {
+    public List<Questao> buscarComFiltros(String title, List<Long> disciplinaIds, List<Long> professorIds) {
         User usuario = getUsuarioAutenticado();
 
         if (usuario.getRole() != UserRole.COORDENADOR) {
-            professorId = usuario.getId();
+            professorIds = List.of(usuario.getId());
         }
 
-        if (disciplinaId != null && professorId != null) {
-            return questaoRepository.findBySubjectIdAndCreatedByIdOrderByIdDesc(disciplinaId, professorId);
-        }
-
-        if (disciplinaId != null) {
-            return questaoRepository.findBySubjectIdOrderByIdDesc(disciplinaId);
-        }
-
-        return questaoRepository.findByCreatedByIdOrderByIdDesc(professorId);
+        return questaoRepository.buscarComFiltros(title, disciplinaIds, professorIds);
     }
 }
