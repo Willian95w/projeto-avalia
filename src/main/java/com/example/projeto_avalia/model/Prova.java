@@ -32,10 +32,6 @@ public class Prova {
     )
     private List<Questao> questoes;
 
-    @ManyToOne
-    @JoinColumn(name = "disciplina_id", nullable = false)
-    private Disciplina disciplina;
-
     @Column(nullable = false)
     private LocalDateTime dataProva;
 
