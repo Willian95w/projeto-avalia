@@ -31,9 +31,7 @@ public class QuestaoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Questao> editarQuestao(@PathVariable Long id,
-                                                 @RequestBody QuestaoUpdateDTO dto) {
-
+    public ResponseEntity<Questao> editarQuestao(@PathVariable Long id, @RequestBody QuestaoUpdateDTO dto) {
         Questao questao = questaoService.editarQuestao(id, dto);
         return ResponseEntity.ok(questao);
     }

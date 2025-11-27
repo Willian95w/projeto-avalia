@@ -50,7 +50,7 @@ public class GlobalExceptionHandler {
                 .body(buildResponse(HttpStatus.FORBIDDEN, ex.getMessage()));
     }
 
-    @ExceptionHandler(Exception.class) // fallback
+    @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleGeneral(Exception ex) {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)

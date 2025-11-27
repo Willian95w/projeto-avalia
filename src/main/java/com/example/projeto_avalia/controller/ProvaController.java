@@ -27,8 +27,6 @@ public class ProvaController {
         headers.setContentDispositionFormData("attachment", "prova.pdf");
         headers.setContentLength(pdfBytes.length);
 
-        return ResponseEntity.ok()
-                .headers(headers)
-                .body(pdfBytes);
+        return ResponseEntity.ok().headers(headers).body(pdfBytes);
     }
 }

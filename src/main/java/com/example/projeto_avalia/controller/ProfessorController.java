@@ -20,7 +20,6 @@ public class ProfessorController {
     private final ProfessorService professorService;
     private final DisciplinaService disciplinaService;
 
-    // Criar professor
     @PostMapping
     public ResponseEntity<Professor> criarProfessor(@RequestBody ProfessorRegisterDTO dto) {
         List subjects = dto.subjectIds().stream()
@@ -38,10 +37,7 @@ public class ProfessorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Professor> editarProfessor(
-            @PathVariable Long id,
-            @RequestBody ProfessorUpdateDTO dto) {
-
+    public ResponseEntity<Professor> editarProfessor(@PathVariable Long id, @RequestBody ProfessorUpdateDTO dto) {
         Professor professor = professorService.editarProfessor(id, dto);
         return ResponseEntity.ok(professor);
     }
@@ -59,11 +55,7 @@ public class ProfessorController {
     }
 
     @PutMapping("/{id}/senha")
-    public ResponseEntity<Professor> alterarSenha(
-            @PathVariable Long id,
-            @RequestBody AlterarSenhaDTO dto
-    ) {
+    public ResponseEntity<Professor> alterarSenha(@PathVariable Long id, @RequestBody AlterarSenhaDTO dto) {
         return ResponseEntity.ok(professorService.alterarSenha(id, dto.novaSenha(), dto.confirmSenha()));
     }
-
 }

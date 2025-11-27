@@ -43,7 +43,7 @@ public class Prova {
     private String tipoAvaliacao;
 
     @Column(nullable = false)
-    private Integer duracao; // Em minutos
+    private Integer duracao;
 
     @Column(nullable = false)
     private Double peso;
