@@ -41,8 +41,14 @@ public class ProvaService {
     public byte[] criarEGerarProva(ProvaRegisterDTO dto) {
         User criador = getUsuarioAutenticado();
 
-        User professorResponsavel = userRepository.findById(dto.professorResponsavelId())
-                .orElseThrow(() -> new ResourceNotFoundException("Professor responsável não encontrado."));
+        User professorResponsavel;
+
+        if (criador.getRole() == UserRole.COORDENADOR) {
+            professorResponsavel = userRepository.findById(dto.professorResponsavelId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Professor responsável não encontrado."));
+        } else {
+            professorResponsavel = criador;
+        }
 
         if (criador.getRole() != UserRole.COORDENADOR &&
                 !professorResponsavel.getId().equals(criador.getId())) {
