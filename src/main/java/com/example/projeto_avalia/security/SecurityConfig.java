@@ -3,6 +3,7 @@ package com.example.projeto_avalia.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -34,6 +35,7 @@ public class SecurityConfig {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
 
         http.authorizeHttpRequests(auth -> auth
+                .requestMatchers(HttpMethod.GET, "/disciplinas").hasAnyRole("COORDENADOR", "PROFESSOR")
                 .requestMatchers("/disciplinas/**").hasRole("COORDENADOR")
                 .requestMatchers("/professores/**").hasRole("COORDENADOR")
                 .requestMatchers("/auth/**").permitAll()
