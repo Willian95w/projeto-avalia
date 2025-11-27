@@ -20,8 +20,13 @@ public class AuthController {
         return ResponseEntity.ok(authService.register(dto));
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginDTO dto) {
-        return ResponseEntity.ok(authService.login(dto));
+    @PostMapping("/login-coordenador")
+    public ResponseEntity<AuthResponseDTO> loginCoordenador(@RequestBody LoginDTO dto) {
+        return ResponseEntity.ok(authService.loginCoordenador(dto));
+    }
+
+    @PostMapping("/login-professor")
+    public ResponseEntity<AuthResponseDTO> loginProfessor(@RequestBody LoginDTO dto) {
+        return ResponseEntity.ok(authService.loginProfessor(dto));
     }
 }
