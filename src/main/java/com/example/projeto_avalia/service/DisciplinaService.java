@@ -3,8 +3,14 @@ package com.example.projeto_avalia.service;
 import com.example.projeto_avalia.exceptions.BadRequestException;
 import com.example.projeto_avalia.exceptions.ResourceNotFoundException;
 import com.example.projeto_avalia.model.Disciplina;
+import com.example.projeto_avalia.model.Professor;
+import com.example.projeto_avalia.model.User;
+import com.example.projeto_avalia.model.UserRole;
 import com.example.projeto_avalia.repository.DisciplinaRepository;
+import com.example.projeto_avalia.repository.ProfessorRepository;
+import com.example.projeto_avalia.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +20,14 @@ import java.util.List;
 public class DisciplinaService {
 
     private final DisciplinaRepository disciplinaRepository;
+    private final UserRepository userRepository;
+    private final ProfessorRepository professorRepository;
+
+    private User getUsuarioAutenticado() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário autenticado não encontrado."));
+    }
 
     public Disciplina criarDisciplina(String name) {
         disciplinaRepository.findByName(name)
@@ -26,7 +40,15 @@ public class DisciplinaService {
     }
 
     public List<Disciplina> listarDisciplinas() {
-        return disciplinaRepository.findAllByOrderByIdDesc();
+        User usuario = getUsuarioAutenticado();
+
+        if (usuario.getRole() == UserRole.COORDENADOR) {
+            return disciplinaRepository.findAllByOrderByIdDesc();
+        }
+
+        return professorRepository.findByUserId(usuario.getId())
+                .map(Professor::getSubjects)
+                .orElse(List.of());
     }
 
     public Disciplina editarDisciplina(Long id, String newName) {
