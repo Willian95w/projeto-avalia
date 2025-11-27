@@ -95,8 +95,8 @@ public class ProvaService {
 
             Image logo = null;
             try {
-                logo = Image.getInstance(new URL("https://bkpsitecpsnew.blob.core.windows.net/uploadsitecps/sites/1/2012/05/Logo-Fatec-1200x800-1.jpg"));
-                logo.scaleToFit(80, 80);
+                logo = Image.getInstance(new URL("https://image.portaldacidade.com/unsafe/https://bucket.portaldacidade.com/mogimirim.portaldacidade.com/img/news/2019-10/fatec-de-mogi-divulga-novo-curso-fabricacao-mecanica-5dafbd16025f2.jpg"));
+                logo.scaleToFit(95, 95);
             } catch (Exception e) {
             }
 
@@ -112,9 +112,9 @@ public class ProvaService {
             logoCell.setBorderWidth(2);
             logoCell.setHorizontalAlignment(Element.ALIGN_CENTER);
             logoCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            logoCell.setPaddingTop(15);
-            logoCell.setPaddingBottom(5);
-            logoCell.setPaddingLeft(25);
+            logoCell.setPaddingTop(20);
+            logoCell.setPaddingBottom(10);
+            logoCell.setPaddingLeft(20);
             logoCell.setPaddingRight(10);
 
             if (logo != null) {
@@ -128,8 +128,8 @@ public class ProvaService {
             PdfPCell titleCell = new PdfPCell();
             titleCell.setBorder(Rectangle.BOX);
             titleCell.setBorderWidth(2);
-            titleCell.setPaddingTop(15);
-            titleCell.setPaddingBottom(5);
+            titleCell.setPaddingTop(25);
+            titleCell.setPaddingBottom(10);
             titleCell.setPaddingLeft(10);
             titleCell.setPaddingRight(10);
 
@@ -187,7 +187,7 @@ public class ProvaService {
                 document.add(new Paragraph("   C) " + q.getAnswerC()));
                 document.add(new Paragraph("   D) " + q.getAnswerD()));
                 document.add(new Paragraph("   E) " + q.getAnswerE()));
-                document.add(new Paragraph("----------------------------------------------------------------------------------------------------------------------------------"));
+                document.add(new Paragraph(" "));
                 numeroQuestao++;
             }
 
