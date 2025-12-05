@@ -35,6 +35,7 @@ public class DisciplinaService {
 
         Disciplina disciplina = Disciplina.builder()
                 .name(name)
+                .ativo(true)
                 .build();
         return disciplinaRepository.save(disciplina);
     }
