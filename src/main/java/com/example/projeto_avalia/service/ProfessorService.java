@@ -42,6 +42,7 @@ public class ProfessorService {
                 .email(dto.email())
                 .password(passwordEncoder.encode(dto.password()))
                 .role(UserRole.PROFESSOR)
+                .ativo(true)
                 .build();
         userRepository.save(user);
 
@@ -50,6 +51,7 @@ public class ProfessorService {
                 .phone(dto.phone())
                 .user(user)
                 .subjects(subjects)
+                .ativo(true)
                 .build();
 
         return professorRepository.save(professor);
