@@ -2,6 +2,7 @@ package com.example.projeto_avalia.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Where;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Where(clause = "ativo = true")
 public class Professor {
 
     @Id
@@ -35,4 +37,8 @@ public class Professor {
             inverseJoinColumns = @JoinColumn(name = "disciplina_id")
     )
     private List<Disciplina> subjects;
+
+    @Column(nullable = false)
+    private Boolean ativo = true;
+
 }

@@ -86,7 +86,9 @@ public class ProfessorService {
         Professor professor = professorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Professor não encontrado"));
 
-        professorRepository.delete(professor);
+        professor.setAtivo(false);
+        professor.getUser().setAtivo(false);
+        professorRepository.save(professor);
     }
 
     public List<Professor> buscarPorNome(String name) {
