@@ -116,7 +116,8 @@ public class QuestaoService {
             throw new BadRequestException("Apenas coordenadores podem excluir questões.");
         }
 
-        questaoRepository.delete(questao);
+        questao.setAtivo(false);
+        questaoRepository.save(questao);
     }
 
     public List<Questao> buscarComFiltros(String title, List<Long> disciplinaIds, List<Long> professorIds) {
