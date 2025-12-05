@@ -2,6 +2,7 @@ package com.example.projeto_avalia.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "disciplinas")
@@ -10,6 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Where(clause = "ativo = true")
 public class Disciplina {
 
     @Id
@@ -18,4 +20,8 @@ public class Disciplina {
 
     @Column(unique = true, nullable = false)
     private String name;
+
+    @Column(nullable = false)
+    private Boolean ativo = true;
+
 }

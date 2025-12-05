@@ -63,7 +63,8 @@ public class DisciplinaService {
         Disciplina disciplina = disciplinaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Disciplina não encontrada"));
 
-        disciplinaRepository.delete(disciplina);
+        disciplina.setAtivo(false);
+        disciplinaRepository.save(disciplina);
     }
 
     public List<Disciplina> buscarPorNome(String name) {
