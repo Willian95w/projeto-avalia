@@ -54,6 +54,7 @@ public class QuestaoService {
                 .correctAnswer(dto.correctAnswer().toUpperCase())
                 .subject(disciplina)
                 .createdBy(criador)
+                .ativo(true)
                 .build();
 
         return questaoRepository.save(questao);
